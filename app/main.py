@@ -1,8 +1,13 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.endpoints.users import router as users_router
+
 app = FastAPI()
+app.mount('/static', StaticFiles(directory='app/static'), name='static')
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -11,6 +16,8 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
+
+app.include_router(users_router)
 
 html = """
 <!DOCTYPE html>

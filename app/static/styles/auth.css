@@ -1,0 +1,130 @@
+:root {
+    --primary: #2196F3;
+    --error: #f44336;
+    --success: #4CAF50;
+    --inactive-tab: #e0e0e0;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .auth-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 2px solid var(--inactive-tab);
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    background: var(--inactive-tab);
+    transition: all 0.3s ease;
+  }
+  
+  .tab.active {
+    background: white;
+    border-bottom: 2px solid var(--primary);
+    margin-bottom: -2px;
+  }
+  
+  .form-container {
+    padding: 2rem;
+  }
+  
+  .form {
+    display: none;
+  }
+  
+  .form.active {
+    display: block;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  }
+  
+  .form-group label {
+    position: absolute;
+    left: 10px;
+    top: -10px;
+    background: white;
+    padding: 0 5px;
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .error-message {
+    color: var(--error);
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: none;
+  }
+  
+  button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #1976D2;
+  }
+  
+  .password-strength {
+    height: 4px;
+    background: #e0e0e0;
+    margin-top: 0.5rem;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .strength-meter {
+    height: 100%;
+    width: 0;
+    transition: all 0.3s ease;
+  }
+  
