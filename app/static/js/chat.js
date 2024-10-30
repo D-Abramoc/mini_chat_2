@@ -1,4 +1,4 @@
-var client_id = Date.now()
+var client_id = currentUserId
 document.querySelector("#ws-id").textContent = client_id;
 var ws = new WebSocket(`ws://127.0.0.1/ws/${client_id}`);
 ws.onmessage = function(event) {

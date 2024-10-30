@@ -12,6 +12,12 @@
         </form>
         <ul id='messages'>
         </ul>
+
+        <script>
+            // Передаем идентификатор текущего пользователя в JavaScript
+            const currentUserId = parseInt("{{ user.id }}", 10);
+        </script>
+        
         
         <script src='/static/js/chat.js'></script>
     </body>
