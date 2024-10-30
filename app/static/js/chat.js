@@ -10,7 +10,8 @@ ws.onmessage = function(event) {
 };
 function sendMessage(event) {
     var input = document.getElementById("messageText")
-    ws.send(input.value)
+    var recipient = document.getElementById("recipientId")
+    ws.send(recipient.value + " " + input.value)
     input.value = ''
     event.preventDefault()
 }
