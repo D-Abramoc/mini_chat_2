@@ -101,7 +101,7 @@ html = """
 
 @app.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
-    await manager.connect(websocket)
+    await manager.connect(client_id, websocket)
     try:
         while True:
             data = await websocket.receive_text()
