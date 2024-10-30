@@ -58,8 +58,17 @@ async def websocket_endpoint(
                 recipient_id=int(to_recipient),
                 content=message
             )
-            await manager.send_personal_message(f"You wrote: {data}", websocket)
-            await manager.broadcast(f"Client #{client_id} says: {data}")
+            await manager.send_personal_message(
+                    f"Сообщение пользователю {to_recipient}: {message}",
+                    websocket
+                )
+            await manager.send_message_to_user(
+                    f"Сообщение от пользователя {client_id}: {message}",
+                    to_recipient
+                )
+
+            # await manager.send_personal_message(f"You wrote: {data}", websocket)
+            # await manager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
-        manager.disconnect(websocket)
+        manager.disconnect(client_id, websocket)
         await manager.broadcast(f"Client #{client_id} left the chat")

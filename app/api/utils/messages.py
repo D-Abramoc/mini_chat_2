@@ -1,5 +1,8 @@
 from fastapi import WebSocket
 
+from app.core.db import AsyncSessionLocal
+from app.crud.users import user_crud
+
 
 class ConnectionManager:
     def __init__(self):
@@ -18,6 +21,21 @@ class ConnectionManager:
     async def broadcast(self, message: str):
         for _, connection in self.active_connections.items():
             await connection.send_json(message)
+
+    async def send_message_to_user(self, message: str, user_id: str,):
+        if user_id not in self.active_connections:
+            async with AsyncSessionLocal() as session:
+                user = await user_crud.find_one_or_none(
+                    session, id=int(user_id)
+                )
+            if user is None:
+                pass
+            else:
+                print('Send messaghe to tg')
+                # send_notification.delay(user.tg_id, 'You have a message')
+        else:
+            connection = self.active_connections[user_id]
+            await connection.send_text(message)
 
 
 manager = ConnectionManager()
