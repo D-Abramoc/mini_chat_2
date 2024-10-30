@@ -2,6 +2,7 @@ from fastapi import WebSocket
 
 from app.core.db import AsyncSessionLocal
 from app.crud.users import user_crud
+from app.worker import send_notification
 
 
 class ConnectionManager:
@@ -31,8 +32,7 @@ class ConnectionManager:
             if user is None:
                 pass
             else:
-                print('Send messaghe to tg')
-                # send_notification.delay(user.tg_id, 'You have a message')
+                send_notification.delay(user.tg_id, 'You have a message')
         else:
             connection = self.active_connections[user_id]
             await connection.send_text(message)
