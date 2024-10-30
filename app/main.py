@@ -2,10 +2,14 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
 
-from app.api.endpoints.users import router as users_router
+from app.api.endpoints.auth import router as auth_router
 from app.api.endpoints.messages import router as messages_router
+from app.api.endpoints.users import router as users_router
 from app.api.utils.messages import manager
+from app.redis_app import redis as r
 
 app = FastAPI()
 app.mount('/static', StaticFiles(directory='app/static'), name='static')
@@ -19,8 +23,15 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-app.include_router(users_router)
+app.include_router(auth_router)
 app.include_router(messages_router)
+app.include_router(users_router)
+
+
+@app.on_event("startup")
+async def startup_event():
+    FastAPICache.init(RedisBackend(redis=r), prefix='fastapi-cache')
+
 
 html = """
 <!DOCTYPE html>
