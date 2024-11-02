@@ -64,7 +64,7 @@ async def websocket_endpoint(
                 )
             await manager.send_message_to_user(
                     f"Сообщение от пользователя {client_id}: {message}",
-                    to_recipient
+                    int(to_recipient)
                 )
 
             # await manager.send_personal_message(f"You wrote: {data}", websocket)

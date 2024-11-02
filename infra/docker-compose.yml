@@ -3,6 +3,7 @@ services:
   bot:
     container_name: bot_chat
     build: ../
+    restart: always
     command: python -m app.bot.main
 
   db:
@@ -34,6 +35,7 @@ services:
 
   worker:
     build: ../
+    restart: always
     command: celery -A app.worker:celery_app worker --loglevel=INFO
     volumes:
       - ../:/app/
@@ -43,9 +45,11 @@ services:
   
   redis:
     image: redis
+    restart: always
   
   dashboard:
     build: ../
+    restart: always
     command: celery -A app.worker:celery_app --broker=redis://redis:6379/0 flower --port=5555
     ports:
       - 5555:5555
