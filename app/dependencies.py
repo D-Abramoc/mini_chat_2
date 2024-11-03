@@ -20,8 +20,11 @@ def get_token(request: Request):
     return token
 
 
-async def get_current_user(token: str = Depends(get_token),
-                           session: AsyncSession = Depends(get_async_session)) -> User:
+async def get_current_user(
+    token: str = Depends(get_token),
+    session: AsyncSession = Depends(get_async_session)
+) -> User:
+    """Получение текущего юзера."""
     try:
         auth_data = get_auth_data()
         payload = jwt.decode(

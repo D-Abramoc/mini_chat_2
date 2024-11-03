@@ -8,7 +8,15 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     app_title: str = 'Chat'
     description: str = 'Chat'
-    database_url: str = 'postgresql+asyncpg://chatuser:chat_pass@localhost:5432/chatdb'
+    postgres_user: str = 'chatuser'
+    postgres_password: str = 'chat_pass'
+    postgres_host: str = 'localhost'
+    postgres_port: int = 5432
+    postgres_db: str = 'chatdb'
+    # database_url: str = (
+    #     f'postgresql+asyncpg://{postgres_user}:{postgres_password}@'
+    #     f'{postgres_host}:{postgres_port}/{postgres_db}'
+    # )
     secret: str = 'SECRET'
     algorithm: str = ''
 
@@ -38,5 +46,12 @@ def get_auth_data():
         'algorithm': settings.algorithm
     }
 
+
+DATABASE_URL = (
+        f'postgresql+asyncpg://{settings.postgres_user}:'
+        f'{settings.postgres_password}@'
+        f'{settings.postgres_host}:{settings.postgres_port}/'
+        f'{settings.postgres_db}'
+    )
 
 templates = Jinja2Templates(directory="templates")

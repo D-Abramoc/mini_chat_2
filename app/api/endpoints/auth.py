@@ -22,6 +22,7 @@ templates = Jinja2Templates(directory='app/templates')
 
 @router.get('/', response_class=HTMLResponse)
 async def get_auth_page(request: Request):
+    """Возвращает страницу регистрации/авторизации."""
     return templates.TemplateResponse(
         'auth.html',
         {'request': request}
@@ -75,5 +76,6 @@ async def auth_user(
 
 @router.post("/logout/")
 async def logout_user(response: Response):
+    """Выход пользователя."""
     response.delete_cookie(key="users_access_token")
     return {'message': 'Пользователь успешно вышел из системы'}

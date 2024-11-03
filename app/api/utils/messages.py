@@ -14,11 +14,8 @@ class ConnectionManager:
         self.active_connections[user_id] = websocket
 
     def disconnect(self, user_id: int):
-        print(user_id)
-        print(self.active_connections)
         try:
             del self.active_connections[user_id]
-            print(self.active_connections)
         except TypeError:
             pass
 

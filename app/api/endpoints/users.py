@@ -14,5 +14,8 @@ router = APIRouter(prefix='/users', tags=['Users'])
 
 @router.get('/', response_model=list[SUserRead])
 @cache(expire=120)
-async def get_users(session: Annotated[AsyncSession, Depends(get_async_session)]):
+async def get_users(
+    session: Annotated[AsyncSession, Depends(get_async_session)]
+):
+    """Возвращает список пользователей."""
     return await user_crud.find_all(session=session)

@@ -2,7 +2,6 @@ from typing import Annotated
 
 from fastapi import Depends, FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -44,7 +43,6 @@ async def websocket_endpoint(
     websocket: WebSocket, client_id: int,
     session: Annotated[AsyncSession, Depends(get_async_session)]
 ):
-    print(f'connection for {client_id}')
     await manager.connect(client_id, websocket)
     try:
         while True:
@@ -77,9 +75,6 @@ async def websocket_endpoint(
                     f"Сообщение от пользователя {client_id}: {message}",
                     int(to_recipient)
                 )
-
-            # await manager.send_personal_message(f"You wrote: {data}", websocket)
-            # await manager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
         manager.disconnect(client_id)
         await manager.broadcast(f"Client #{client_id} left the chat")
