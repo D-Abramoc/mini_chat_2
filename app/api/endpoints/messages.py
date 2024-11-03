@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi_cache.decorator import cache
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.utils.messages import manager
@@ -28,6 +29,7 @@ async def chat_page(request: Request, user_data: Annotated[User, Depends(get_cur
 
 
 @router.get('/messages/{user_id}', response_model=list[MessageRead])
+@cache(expire=120)
 async def get_messages_between_users(
     user_id: int,
     current_user: Annotated[User, Depends(get_current_user)],
@@ -38,16 +40,3 @@ async def get_messages_between_users(
         user_id_2=current_user.id,
         session=session
     ) or []
-
-
-# @router.websocket("/ws/{client_id}")
-# async def websocket_endpoint(websocket: WebSocket, client_id: int):
-#     await manager.connect(websocket)
-#     try:
-#         while True:
-#             data = await websocket.receive_text()
-#             await manager.send_personal_message(f"You wrote: {data}", websocket)
-#             await manager.broadcast(f"Client #{client_id} says: {data}")
-#     except WebSocketDisconnect:
-#         manager.disconnect(websocket)
-#         await manager.broadcast(f"Client #{client_id} left the chat")
