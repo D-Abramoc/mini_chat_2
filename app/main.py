@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import IntegrityError
 
 from app.api.endpoints.auth import router as auth_router
 from app.api.endpoints.messages import router as messages_router
@@ -43,21 +44,31 @@ async def websocket_endpoint(
     websocket: WebSocket, client_id: int,
     session: Annotated[AsyncSession, Depends(get_async_session)]
 ):
+    print(f'connection for {client_id}')
     await manager.connect(client_id, websocket)
     try:
         while True:
-            data = await websocket.receive_text()
+            try:
+                data = await websocket.receive_text()
+            except WebSocketDisconnect:
+                manager.disconnect(client_id)
             try:
                 to_recipient, message = data.split(maxsplit=1)
             except ValueError:
                 to_recipient = data.strip()
                 message = 'Отправлено пустое сообщение.'
-            await message_crud.add(
-                session=session,
-                sender_id=client_id,
-                recipient_id=int(to_recipient),
-                content=message
-            )
+            except UnboundLocalError:
+                break
+            try:
+                await message_crud.add(
+                    session=session,
+                    sender_id=client_id,
+                    recipient_id=int(to_recipient),
+                    content=message
+                )
+            except IntegrityError:
+                to_recipient = to_recipient
+                message = 'Такого пользователя не существует.'
             await manager.send_personal_message(
                     f"Сообщение пользователю {to_recipient}: {message}",
                     websocket
@@ -70,5 +81,5 @@ async def websocket_endpoint(
             # await manager.send_personal_message(f"You wrote: {data}", websocket)
             # await manager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
-        manager.disconnect(client_id, websocket)
+        manager.disconnect(client_id)
         await manager.broadcast(f"Client #{client_id} left the chat")

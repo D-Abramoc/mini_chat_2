@@ -13,8 +13,14 @@ class ConnectionManager:
         await websocket.accept()
         self.active_connections[user_id] = websocket
 
-    def disconnect(self, user_id: int, websocket: WebSocket):
-        self.active_connections.pop[user_id]
+    def disconnect(self, user_id: int):
+        print(user_id)
+        print(self.active_connections)
+        try:
+            del self.active_connections[user_id]
+            print(self.active_connections)
+        except TypeError:
+            pass
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
         await websocket.send_json(message)
