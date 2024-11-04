@@ -15,6 +15,7 @@ class SUserRegister(BaseModel):
         ..., min_length=3, max_length=50,
         description='Имя, от 3 до 50 символов'
     )
+    tg_id: int = Field(None)
 
 
 class SUserAuth(BaseModel):

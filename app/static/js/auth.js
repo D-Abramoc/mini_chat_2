@@ -48,7 +48,7 @@ const handleFormSubmit = async (formType, url, fields) => {
 
     const data = await sendRequest(url, formType === 'login'
         ? {email: fields[0], password: fields[1]}
-        : {email: fields[0], name: fields[1], password: fields[2], password_check: fields[3]});
+        : {email: fields[0], name: fields[1], password: fields[2], password_check: fields[3], tg_id: fields[4]});
 
     if (data && formType === 'login') {
         window.location.href = '/chat';
@@ -73,11 +73,12 @@ document.getElementById('registerButton').addEventListener('click', async (event
     const name = document.querySelector('#registerForm input[type="text"]').value;
     const password = document.querySelectorAll('#registerForm input[type="password"]')[0].value;
     const password_check = document.querySelectorAll('#registerForm input[type="password"]')[1].value;
+    const tg_id = document.querySelector('#registerForm input[type="number"]').value;
 
     if (password !== password_check) {
         alert('Пароли не совпадают.');
         return;
     }
 
-    await handleFormSubmit('register', 'register/', [email, name, password, password_check]);
+    await handleFormSubmit('register', 'register/', [email, name, password, password_check, tg_id]);
 });

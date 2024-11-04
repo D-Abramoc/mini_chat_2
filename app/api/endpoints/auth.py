@@ -35,6 +35,7 @@ async def register_user(
     session: AsyncSession = Depends(get_async_session)
 ) -> dict[str, str]:
     """Регистрация пользователя."""
+    print(user_data)
     user = await user_crud.find_one_or_none(session, email=user_data.email)
     if user:
         raise UserAlreadyExistsException
@@ -45,7 +46,8 @@ async def register_user(
         session,
         name=user_data.name,
         email=user_data.email,
-        password=hashed_password
+        password=hashed_password,
+        tg_id=user_data.tg_id
     )
 
     return {'message': 'Вы успешно зарегистрированы!'}
