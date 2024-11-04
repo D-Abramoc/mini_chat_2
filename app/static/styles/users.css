@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+
+  #userList {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .user-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+  }
+
+  .user-id {
+    font-weight: bold;
+    color: #2196F3;
+    margin-right: 10px;
+  }
+
+  .refresh-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .refresh-indicator.show {
+    opacity: 1;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  

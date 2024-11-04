@@ -3,6 +3,7 @@
     <head>
         <title>Chat</title>
         <link rel="stylesheet" type="text/css" href="/static/styles/button_exit.css">
+        <link rel='stylesheet' type='text/css' href='/static/styles/users.css'
     </head>
     <body>
         <h1>WebSocket Chat</h1>
@@ -19,6 +20,12 @@
         <ul id='messages'>
         </ul>
 
+        <div id="userList">
+            <h2>User IDs List</h2>
+            <div id="users"></div>
+          </div>
+          <div id="refreshIndicator" class="refresh-indicator">Refreshing...</div>
+
         <script>
             // Передаем идентификатор текущего пользователя в JavaScript
             const currentUserId = parseInt("{{ user.id }}", 10);
@@ -27,6 +34,7 @@
         
         <script src='/static/js/chat.js'></script>
         <script src='/static/js/button_exit.js'></script>
+        <script src='/static/js/users.js'></script>
     </body>
 </html>
 
