@@ -2,12 +2,15 @@
 <html>
     <head>
         <title>Chat</title>
+        <link rel="stylesheet" type="text/css" href="/static/styles/button_exit.css">
     </head>
     <body>
         <h1>WebSocket Chat</h1>
         <h2>Your ID: <span id="ws-id"></span></h2>
 
-
+        <button class="exit-btn" onclick="handleExit()">Выход</button>
+        <br><br>
+        
         <form action="" onsubmit="sendMessage(event)">
             <label>Message: <input type="text" id="messageText" autocomplete="off"/></label>
             <label>Recipient: <input type="text" id="recipientId" autocomplete="off"/></label>
@@ -23,6 +26,7 @@
         
         
         <script src='/static/js/chat.js'></script>
+        <script src='/static/js/button_exit.js'></script>
     </body>
 </html>
 
