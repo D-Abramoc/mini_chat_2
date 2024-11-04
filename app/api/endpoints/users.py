@@ -4,10 +4,9 @@ from fastapi import APIRouter, Depends
 from fastapi_cache.decorator import cache
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.schemas.users import SUserRead
 from app.core.db import get_async_session
 from app.crud.users import user_crud
-
+from app.schemas.users import SUserRead
 
 router = APIRouter(prefix='/users', tags=['Users'])
 

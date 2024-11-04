@@ -1,14 +1,14 @@
-from fastapi import Request, HTTPException, status, Depends
-from jose import jwt, JWTError
 from datetime import datetime, timezone
+
+from fastapi import Depends, HTTPException, Request, status
+from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.config import get_auth_data
-from app.exceptions import (
-    TokenExpiredException, NoJwtException, NoUserIdException,
-    TokenNoFoundException,
-)
-from app.crud.users import user_crud
 from app.core.db import get_async_session
+from app.crud.users import user_crud
+from app.exceptions import (NoJwtException, NoUserIdException,
+                            TokenExpiredException, TokenNoFoundException)
 from app.models import User
 
 

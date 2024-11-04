@@ -6,12 +6,11 @@ from fastapi.templating import Jinja2Templates
 from fastapi_cache.decorator import cache
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.schemas.messages import MessageRead
-from app.models import User
-from app.dependencies import get_current_user
 from app.core.db import get_async_session
 from app.crud.messages import message_crud
-
+from app.dependencies import get_current_user
+from app.models import User
+from app.schemas.messages import MessageRead
 
 router = APIRouter(prefix='/chat', tags=['Chat'])
 

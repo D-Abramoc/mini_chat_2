@@ -5,7 +5,6 @@ from celery import Celery
 from app.bot.main import bot
 from app.core.config import settings
 
-
 celery_app = Celery(
     'tasks',
     broker=f'redis://redis:{settings.celery_port}/0',

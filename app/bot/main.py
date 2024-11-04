@@ -3,8 +3,8 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
-from app.core.config import bot_settings
 from app.bot.handlers import router as start_router
+from app.core.config import bot_settings
 
 logger = logging.getLogger(__name__)
 

@@ -1,21 +1,21 @@
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.endpoints.auth import router as auth_router
 from app.api.endpoints.messages import router as messages_router
 from app.api.endpoints.users import router as users_router
 from app.api.utils.messages import manager
-from app.redis_app import redis as r
 from app.crud.messages import message_crud
 from app.dependencies import get_async_session
+from app.redis_app import redis as r
 
 app = FastAPI()
 app.mount('/static', StaticFiles(directory='app/static'), name='static')

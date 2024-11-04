@@ -1,19 +1,16 @@
-from fastapi import APIRouter, Request, Depends, Response
+from fastapi import APIRouter, Depends, Request, Response
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.schemas.users import SUserAuth, SUserRegister
+from app.api.utils.auth import (authenticate_user, create_access_token,
+                                get_password_hash)
 from app.core.db import get_async_session
 from app.crud.users import user_crud
-from app.exceptions import (
-    UserAlreadyExistsException, PasswordMismatchException,
-    IncorrectEmailOrPasswordException,
-)
-from app.api.utils.auth import (
-    get_password_hash, authenticate_user, create_access_token
-)
-
+from app.exceptions import (IncorrectEmailOrPasswordException,
+                            PasswordMismatchException,
+                            UserAlreadyExistsException)
+from app.schemas.users import SUserAuth, SUserRegister
 
 router = APIRouter(prefix='/auth', tags=['Auth'])
 
