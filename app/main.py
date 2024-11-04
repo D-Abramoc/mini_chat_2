@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
@@ -36,6 +37,11 @@ app.include_router(users_router)
 @app.on_event("startup")
 async def startup_event():
     FastAPICache.init(RedisBackend(redis=r), prefix='fastapi-cache')
+
+
+@app.get("/")
+async def redirect_to_auth():
+    return RedirectResponse(url="/auth")
 
 
 @app.websocket("/ws/{client_id}")
